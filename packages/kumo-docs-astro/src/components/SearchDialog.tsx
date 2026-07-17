@@ -25,6 +25,9 @@ const COMPONENTS_WITHOUT_DOCS = new Set([
   "Field",
   "Icon",
   "Surface", // Deprecated compatibility export; no dedicated docs page
+  "Chart",
+  "SankeyChart",
+  "TimeseriesChart",
 ]);
 
 /**
@@ -35,6 +38,11 @@ const SLUG_OVERRIDES: Record<string, string> = {
   CodeHighlighted: "code-highlighted",
   DropdownMenu: "dropdown",
   Toasty: "toast",
+};
+
+const URL_OVERRIDES: Record<string, string> = {
+  BubbleMap: "/charts/maps",
+  ChoroplethMap: "/charts/maps",
 };
 
 /**
@@ -243,6 +251,8 @@ interface SearchDialogProps {
 
 /** Build URL path from component type and name */
 function getComponentUrl(type: string, name: string): string {
+  if (URL_OVERRIDES[name]) return URL_OVERRIDES[name];
+
   const slug =
     SLUG_OVERRIDES[name] ??
     name.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
